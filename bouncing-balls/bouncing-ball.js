@@ -51,9 +51,11 @@ class Canvas {
     }
 
     updateBallPosition(ball) {
+        const speed = 4;
+
         // update ball position
-        ball.x += ball.stepX;
-        ball.y += ball.stepY;
+        ball.x += ball.stepX * speed;
+        ball.y += ball.stepY * speed;
     
         // bounce off the right + left wall
         if (ball.x + ball.radius > this.canvas.width || ball.x - ball.radius < 0) {
