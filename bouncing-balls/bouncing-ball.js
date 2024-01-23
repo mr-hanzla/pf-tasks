@@ -28,7 +28,13 @@ class Canvas {
     constructor() {
         this.balls = new Array();
         this.canvas = null;
+
+        this.initCanvas();
         
+        this.ctx = this.canvas.getContext('2d');
+    }
+
+    initCanvas() {
         this.canvas = document.getElementById('bouncing-ball-canvas');
         
         // set canvas size to match the window size
@@ -46,13 +52,12 @@ class Canvas {
             }
             this.balls.push(new Ball(event.clientX, event.clientY, directionX, directionY, 15, Ball.getRandomColor()));
         });
-        
-        this.ctx = this.canvas.getContext('2d');
     }
 
     drawBall(ball) {
         this.ctx.beginPath();
         this.ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+        // fills with given color - other option is using 'stroke'
         this.ctx.fillStyle = ball.color;
         this.ctx.fill();
         this.ctx.closePath();
