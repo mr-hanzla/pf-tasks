@@ -1,9 +1,9 @@
 class Ball {
-    constructor(x, y, dx, dy, rad, color) {
+    constructor(x, y, stepX, stepY, rad, color) {
         this.x = x;
         this.y = y;
-        this.dx = dx;
-        this.dy = dy;
+        this.stepX = stepX;
+        this.stepY = stepY;
         this.radius = rad;
         this.color = color;
     }
@@ -14,7 +14,7 @@ class Canvas {
         this.balls = new Array();
         this.canvas = null;
         
-        this.canvas = document.getElementById('bouncingBallCanvas');
+        this.canvas = document.getElementById('bouncing-ball-canvas');
         
         // set canvas size to match the window size
         this.canvas.width = window.innerWidth;
@@ -52,19 +52,19 @@ class Canvas {
 
     updateBallPosition(ball) {
         // update ball position
-        ball.x += ball.dx;
-        ball.y += ball.dy;
+        ball.x += ball.stepX;
+        ball.y += ball.stepY;
     
         // bounce off the right + left wall
         if (ball.x + ball.radius > this.canvas.width || ball.x - ball.radius < 0) {
-            ball.dx = -ball.dx;
+            ball.stepX = -ball.stepX;
             // change color on bouncing
             ball.color = this.getRandomColor();
         }
 
         // bounce off the up + down wall
         if (ball.y + ball.radius > this.canvas.height || ball.y - ball.radius < 0) {
-            ball.dy = -ball.dy;
+            ball.stepY = -ball.stepY;
             // change color on bouncing
             ball.color = this.getRandomColor();
         }
