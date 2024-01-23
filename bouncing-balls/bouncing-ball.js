@@ -18,7 +18,7 @@ class Ball {
         return colors[randomIndex];
     }
 
-    static getRandomSpeed(maxSpeed = 1) {
+    static getRandomSpeed(maxSpeed = 2) {
         // return 1;
         return Math.floor(Math.random() * (maxSpeed * 2 + 1)) - maxSpeed;
     }
@@ -59,7 +59,7 @@ class Canvas {
     }
 
     updateBallPosition(ball) {
-        const speed = 4;
+        const speed = 2;
 
         // update ball position
         ball.x += ball.stepX * speed;
