@@ -18,7 +18,8 @@ class Ball {
         return colors[randomIndex];
     }
 
-    static getRandomSpeed(maxSpeed = 4) {
+    static getRandomSpeed(maxSpeed = 1) {
+        // return 1;
         return Math.floor(Math.random() * (maxSpeed * 2 + 1)) - maxSpeed;
     }
 }
@@ -36,7 +37,14 @@ class Canvas {
 
         // set on-click event handler to create balls
         this.canvas.addEventListener('click', (event)=> {
-            this.balls.push(new Ball(event.clientX, event.clientY, Ball.getRandomSpeed(), Ball.getRandomSpeed(), 15, Ball.getRandomColor()));
+            let directionX = Ball.getRandomSpeed();
+            let directionY = Ball.getRandomSpeed();
+            // make sure ball movement is never a straight line
+            while (directionX === 0 || directionY === 0) {
+                directionX = directionX === 0? Ball.getRandomSpeed(): directionX;
+                directionY = directionY === 0? Ball.getRandomSpeed(): directionY;
+            }
+            this.balls.push(new Ball(event.clientX, event.clientY, directionX, directionY, 15, Ball.getRandomColor()));
         });
         
         this.ctx = this.canvas.getContext('2d');
