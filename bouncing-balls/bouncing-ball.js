@@ -7,6 +7,20 @@ class Ball {
         this.radius = rad;
         this.color = color;
     }
+
+    static getRandomColor() {
+        let colors = [
+            'LightBlue', 'LightCoral', 'LightGreen', 'LawnGreen', 'Maroon', 'MediumPurple', 'Moccasin', 'Aqua',
+            'OrangeRed', 'Peru', 'RebeccaPurple', 'Salmon', 'SaddleBrown', 'SteelBlue', 'Gold', 'DarkSlateGray', 'Chocolate',
+            'Fuchsia', 'Red', 'Yellow', 'Green', 'Blue', 'Green', 'Purple', 'Orange', 'Grey', 'LightBlue', 'AntiqueWhite'
+        ];
+        let randomIndex = Math.floor(Math.random() * colors.length);
+        return colors[randomIndex];
+    }
+
+    static getRandomSpeed(maxSpeed = 4) {
+        return Math.floor(Math.random() * (maxSpeed * 2 + 1)) - maxSpeed;
+    }
 }
 
 class Canvas {
@@ -22,24 +36,10 @@ class Canvas {
 
         // set on-click event handler to create balls
         this.canvas.addEventListener('click', (event)=> {
-            this.balls.push(new Ball(event.clientX, event.clientY, this.getRandomSpeed(), this.getRandomSpeed(), 15, this.getRandomColor()));
+            this.balls.push(new Ball(event.clientX, event.clientY, Ball.getRandomSpeed(), Ball.getRandomSpeed(), 15, Ball.getRandomColor()));
         });
         
         this.ctx = this.canvas.getContext('2d');
-    }
-
-    getRandomColor() {
-        let colors = [
-            'LightBlue', 'LightCoral', 'LightGreen', 'LawnGreen', 'Maroon', 'MediumPurple', 'Moccasin', 'Aqua',
-            'OrangeRed', 'Peru', 'RebeccaPurple', 'Salmon', 'SaddleBrown', 'SteelBlue', 'Gold', 'DarkSlateGray', 'Chocolate',
-            'Fuchsia', 'Red', 'Yellow', 'Green', 'Blue', 'Green', 'Purple', 'Orange', 'Grey', 'LightBlue', 'AntiqueWhite'
-        ];
-        let randomIndex = Math.floor(Math.random() * colors.length);
-        return colors[randomIndex];
-    }
-
-    getRandomSpeed(maxSpeed = 4) {
-        return Math.floor(Math.random() * (maxSpeed * 2 + 1)) - maxSpeed;
     }
 
     drawBall(ball) {
@@ -59,21 +59,23 @@ class Canvas {
         if (ball.x + ball.radius > this.canvas.width || ball.x - ball.radius < 0) {
             ball.stepX = -ball.stepX;
             // change color on bouncing
-            ball.color = this.getRandomColor();
+            ball.color = Ball.getRandomColor();
         }
 
         // bounce off the up + down wall
         if (ball.y + ball.radius > this.canvas.height || ball.y - ball.radius < 0) {
             ball.stepY = -ball.stepY;
             // change color on bouncing
-            ball.color = this.getRandomColor();
+            ball.color = Ball.getRandomColor();
         }
     }
 
     animate() {
-        // clear the canvas
+        // clear the canvas for floating ball effect
+        // comment the line below to print lines
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+        // display and update position of each ball present in array
         this.balls.forEach((ball) => {
             this.drawBall(ball);
             this.updateBallPosition(ball);
